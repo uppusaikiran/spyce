@@ -5,6 +5,7 @@ export interface MemoryContext {
   sessionId?: string;
   domain?: string;
   researchType?: string;
+  industry?: string;
 }
 
 export interface ResearchFindings {
@@ -436,6 +437,157 @@ class MemoryService {
     } catch (error) {
       console.error('🔍 Debug: Error in getRelevantContext:', error);
       return '';
+    }
+  }
+
+  /**
+   * Get relevant memories as an array of strings
+   */
+  async getRelevantMemories(
+    query: string,
+    context: MemoryContext,
+    limit: number = 5
+  ): Promise<string[]> {
+    console.log('🔍 Debug: getRelevantMemories called with:', {
+      query,
+      context,
+      limit
+    });
+
+    if (!this.isInitialized()) {
+      console.warn('🔍 Debug: Memory service not initialized in getRelevantMemories');
+      return [];
+    }
+
+    try {
+      const memories = await this.searchMemories(query, context, limit);
+      
+      console.log('🔍 Debug: Found', memories.length, 'relevant memories');
+      
+      return memories;
+    } catch (error) {
+      console.error('🔍 Debug: Error in getRelevantMemories:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Get chat context from previous conversations
+   */
+  async getChatContext(
+    userId: string,
+    sessionId?: string,
+    limit: number = 5
+  ): Promise<string> {
+    console.log('🔍 Debug: getChatContext called with:', {
+      userId,
+      sessionId,
+      limit
+    });
+
+    if (!this.isInitialized()) {
+      console.warn('🔍 Debug: Memory service not initialized in getChatContext');
+      return 'No previous conversation context found.';
+    }
+
+    try {
+      const context: MemoryContext = {
+        userId,
+        sessionId
+      };
+
+      // Search for previous chat interactions
+      const memories = await this.searchMemories('chat conversation', context, limit);
+      
+      if (memories.length === 0) {
+        console.log('🔍 Debug: No previous chat context found');
+        return 'No previous conversation context found.';
+      }
+
+      const chatContext = `Previous conversation context:\n${memories.join('\n\n')}`;
+      console.log('🔍 Debug: Built chat context with', memories.length, 'previous interactions');
+      
+      return chatContext;
+    } catch (error) {
+      console.error('🔍 Debug: Error in getChatContext:', error);
+      return 'No previous conversation context found.';
+    }
+  }
+
+  /**
+   * Get all memories for a specific user
+   */
+  async getUserMemories(userId: string, limit: number = 20): Promise<any[]> {
+    console.log('🔍 Debug: getUserMemories called with:', {
+      userId,
+      limit
+    });
+
+    if (!this.isInitialized()) {
+      console.warn('🔍 Debug: Memory service not initialized in getUserMemories');
+      return [];
+    }
+
+    try {
+      const context: MemoryContext = { userId };
+      const memories = await this.getAllMemories(context);
+      
+      // Limit results if needed
+      const limitedMemories = memories.slice(0, limit);
+      
+      console.log('🔍 Debug: Retrieved', limitedMemories.length, 'memories for user');
+      
+      return limitedMemories;
+    } catch (error) {
+      console.error('🔍 Debug: Error in getUserMemories:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Store a chat interaction (user message and assistant response)
+   */
+  async storeChatInteraction(
+    userMessage: string,
+    assistantResponse: string,
+    context: MemoryContext
+  ): Promise<string | null> {
+    console.log('🔍 Debug: storeChatInteraction called with:', {
+      userMessageLength: userMessage.length,
+      assistantResponseLength: assistantResponse.length,
+      context
+    });
+
+    if (!this.isInitialized()) {
+      console.warn('🔍 Debug: Memory service not initialized in storeChatInteraction');
+      return null;
+    }
+
+    try {
+      // Create a formatted conversation memory
+      const conversationMemory = `User: ${userMessage}\nAssistant: ${assistantResponse}`;
+      
+      const memoryId = await this.addMemory(
+        conversationMemory,
+        context,
+        {
+          type: 'chat_interaction',
+          userMessage,
+          assistantResponse,
+          timestamp: new Date().toISOString()
+        }
+      );
+
+      if (memoryId) {
+        console.log('✅ Chat interaction stored successfully with ID:', memoryId);
+      } else {
+        console.log('✅ Chat interaction stored successfully (no ID returned)');
+      }
+
+      return memoryId;
+    } catch (error) {
+      console.error('🔍 Debug: Error in storeChatInteraction:', error);
+      return null;
     }
   }
 }

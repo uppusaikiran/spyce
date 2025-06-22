@@ -54,11 +54,11 @@ export async function POST(request: NextRequest) {
       const query = body.query || 'test';
       console.log('🔍 Debug: Searching with query:', query);
       
-      const memories = await memoryService.searchMemories({
+      const memories = await memoryService.searchMemories(
         query,
-        context: { userId },
-        limit: 10
-      });
+        { userId },
+        10
+      );
       
       console.log('🔍 Debug: Search results:', memories.length);
       

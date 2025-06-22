@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       chatContext = await memoryService.getChatContext(userId, sessionId, 5);
       
       // Get relevant memories based on the current message
-      relevantContext = await memoryService.getRelevantContext(
+      relevantContext = await memoryService.getRelevantMemories(
         message.trim(),
         {
           userId,

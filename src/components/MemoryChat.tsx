@@ -8,7 +8,7 @@ import {
   User, 
   Bot, 
   Loader2, 
-  Memory, 
+  Database, 
   Clock,
   MessageSquare,
   Trash2,
@@ -313,7 +313,7 @@ export default function MemoryChat({
                   <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
                   {message.metadata?.memoryEnhanced && (
                     <div className="flex items-center space-x-1 text-blue-600">
-                      <Memory className="w-3 h-3" />
+                      <Database className="w-3 h-3" />
                       <span>Enhanced</span>
                     </div>
                   )}
