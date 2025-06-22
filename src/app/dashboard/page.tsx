@@ -10,6 +10,7 @@ import AgentDashboard from '@/components/AgentDashboard';
 import { CopilotSidebar } from '@copilotkit/react-ui';
 import { CopilotTextarea } from '@copilotkit/react-textarea';
 import { useCopilotAction, useCopilotReadable } from '@copilotkit/react-core';
+import Logo from '@/components/Logo';
 import { 
   Brain, 
   Sparkles, 
@@ -663,30 +664,7 @@ This will help you build a comprehensive competitive landscape!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-3">
-                <img 
-                  src="/spyce-logo-simple.svg" 
-                  alt="Spyce Intelligence" 
-                  className="h-8 w-auto"
-                  onError={(e) => {
-                    console.error('Simple logo failed to load on dashboard, trying original:', e);
-                    const target = e.target as HTMLImageElement;
-                    // Try the original logo
-                    target.src = '/spyce-logo.svg';
-                    target.onerror = () => {
-                      console.error('Original logo also failed on dashboard, showing text fallback');
-                      target.style.display = 'none';
-                      const fallbackDiv = document.createElement('div');
-                      fallbackDiv.className = 'text-lg font-bold text-blue-600';
-                      fallbackDiv.textContent = 'SPYCE';
-                      target.parentNode?.appendChild(fallbackDiv);
-                    };
-                  }}
-                  onLoad={() => {
-                    console.log('Logo loaded successfully on dashboard');
-                  }}
-                />
-              </div>
+              <Logo className="h-8 w-auto" />
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-700">Welcome, {user?.name}</span>

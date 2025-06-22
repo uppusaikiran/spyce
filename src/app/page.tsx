@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Logo from '@/components/Logo';
 import { Search, Bot, BarChart3, Sparkles, ArrowRight, Zap } from 'lucide-react';
 
 export default function HomePage() {
@@ -51,28 +52,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="flex justify-center mb-8"
               >
-                <img 
-                  src="/spyce-logo-simple.svg" 
-                  alt="Spyce Intelligence" 
-                  className="h-16 w-auto"
-                  onError={(e) => {
-                    console.error('Simple logo failed to load on homepage, trying original:', e);
-                    const target = e.target as HTMLImageElement;
-                    // Try the original logo
-                    target.src = '/spyce-logo.svg';
-                    target.onerror = () => {
-                      console.error('Original logo also failed on homepage, showing text fallback');
-                      target.style.display = 'none';
-                      const fallbackDiv = document.createElement('div');
-                      fallbackDiv.className = 'text-4xl font-bold text-blue-600';
-                      fallbackDiv.textContent = 'SPYCE';
-                      target.parentNode?.appendChild(fallbackDiv);
-                    };
-                  }}
-                  onLoad={() => {
-                    console.log('Logo loaded successfully on homepage');
-                  }}
-                />
+                <Logo className="h-16 w-auto" />
               </motion.div>
               
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">

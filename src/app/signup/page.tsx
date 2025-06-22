@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { authService } from '@/lib/auth';
 
 export default function SignupPage() {
@@ -47,28 +48,7 @@ export default function SignupPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center mb-6">
-            <img 
-              src="/spyce-logo-simple.svg" 
-              alt="Spyce Intelligence" 
-              className="h-12 w-auto"
-              onError={(e) => {
-                console.error('Simple logo failed to load on signup, trying original:', e);
-                const target = e.target as HTMLImageElement;
-                // Try the original logo
-                target.src = '/spyce-logo.svg';
-                target.onerror = () => {
-                  console.error('Original logo also failed on signup, showing text fallback');
-                  target.style.display = 'none';
-                  const fallbackDiv = document.createElement('div');
-                  fallbackDiv.className = 'text-2xl font-bold text-blue-600';
-                  fallbackDiv.textContent = 'SPYCE';
-                  target.parentNode?.appendChild(fallbackDiv);
-                };
-              }}
-              onLoad={() => {
-                console.log('Logo loaded successfully on signup page');
-              }}
-            />
+            <Logo className="h-12 w-auto" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Join Spyce
