@@ -37,6 +37,7 @@
     "dotenv": "^16.3.0",
     "framer-motion": "^12.18.1",
     "lucide-react": "^0.292.0",
+    "mem0ai": "^2.1.32",
     "next": "^14.0.0",
     "node-appwrite": "^13.0.0",
     "postcss": "^8.4.0",

@@ -1,6 +1,7 @@
 import { CopilotRuntime, OpenAIAdapter, copilotRuntimeNextJSAppRouterEndpoint } from "@copilotkit/runtime";
 import OpenAI from "openai";
 import { NextRequest } from "next/server";
+import { memoryService } from "@/lib/memory/MemoryService";
 
 // Initialize OpenAI (fallback) or use CopilotKit Cloud
 const openai = new OpenAI({
@@ -28,16 +29,20 @@ const runtime = new CopilotRuntime({
         },
       ],
       handler: async ({ competitorName, analysisType }: { competitorName: string; analysisType: string }) => {
-        // This would integrate with your existing research logic
+        // Note: For full memory integration, you would need to get userId from context
+        // This is a simplified version for demonstration
+        const insights = [
+          `Analysis for ${competitorName} focusing on ${analysisType}`,
+          "Memory integration ready - connect with user session for personalized context",
+          "Generated competitive intelligence insights would appear here"
+        ];
+
         return {
           competitor: competitorName,
           analysisType,
-          insights: [
-            `Analysis for ${competitorName} focusing on ${analysisType}`,
-            "This would connect to your existing research engine",
-            "Generated competitive intelligence insights would appear here"
-          ],
+          insights,
           timestamp: new Date().toISOString(),
+          memoryReady: memoryService.isInitialized(),
         };
       },
     },

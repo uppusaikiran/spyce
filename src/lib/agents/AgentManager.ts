@@ -2,6 +2,7 @@ import { agentOrchestrator } from './index';
 import { DiscoveryAgent } from './DiscoveryAgent';
 import { CrawlingAgent } from './CrawlingAgent';
 import { ResearchAgent } from './ResearchAgent';
+import { memoryService } from '../memory/MemoryService';
 
 export class AgentManager {
   private static instance: AgentManager;
@@ -24,6 +25,9 @@ export class AgentManager {
 
     try {
       console.log('Initializing AI Agent System...');
+
+      // Initialize memory service
+      await memoryService.initialize();
 
       // Initialize and register agents
       const discoveryAgent = new DiscoveryAgent();

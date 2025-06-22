@@ -670,10 +670,6 @@ This will help you build a comprehensive competitive landscape!`;
                   className="h-8 w-auto"
                 />
               </div>
-              <div className="hidden md:flex items-center space-x-2 px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full">
-                <Sparkles className="w-4 h-4 text-purple-600" />
-                <span className="text-sm font-medium text-purple-800">Powered by CopilotKit</span>
-              </div>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-700">Welcome, {user?.name}</span>
@@ -692,6 +688,59 @@ This will help you build a comprehensive competitive landscape!`;
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Spyce Intelligence Dashboard</h1>
           <p className="mt-2 text-gray-600">Advanced competitive intelligence platform powered by AI</p>
+        </div>
+
+        {/* Sponsor Section */}
+        <div className="mb-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="text-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Powered by Leading AI & Infrastructure Partners</h2>
+            <p className="text-sm text-gray-600">Built for the 100 Agents Hackathon</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+            {/* Mem0 */}
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <div className="font-semibold text-sm text-gray-900">Mem0</div>
+                <div className="text-xs text-gray-500">AI Memory</div>
+              </div>
+            </div>
+
+            {/* Tavily */}
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <Search className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <div className="font-semibold text-sm text-gray-900">Tavily</div>
+                <div className="text-xs text-gray-500">Web Search</div>
+              </div>
+            </div>
+
+            {/* Appwrite */}
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <div className="font-semibold text-sm text-gray-900">Appwrite</div>
+                <div className="text-xs text-gray-500">Backend</div>
+              </div>
+            </div>
+
+            {/* CopilotKit */}
+            <div className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <div className="font-semibold text-sm text-gray-900">CopilotKit</div>
+                <div className="text-xs text-gray-500">AI Interface</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Navigation Tabs */}

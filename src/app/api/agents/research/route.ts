@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { agentManager } from '@/lib/agents/AgentManager';
+import { memoryService } from '@/lib/memory/MemoryService';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +12,9 @@ export async function POST(request: NextRequest) {
       excludeTerms,
       languages,
       regions,
-      customInstructions
+      customInstructions,
+      userId,
+      sessionId
     } = await request.json();
 
     // Validate input
@@ -62,8 +65,74 @@ export async function POST(request: NextRequest) {
       customInstructions: customInstructions || ''
     };
 
+    // Get relevant context from memory if userId is provided
+    let memoryContext = '';
+    if (userId && memoryService.isInitialized()) {
+      const relevantMemories = await memoryService.getRelevantContext(
+        query.trim(),
+        {
+          userId,
+          sessionId,
+          domain: context?.industry,
+          researchType: type
+        }
+      );
+      
+      if (relevantMemories && relevantMemories.length > 0) {
+        memoryContext = `\nRelevant previous research context:\n${relevantMemories}`;
+        researchTask.customInstructions = (researchTask.customInstructions || '') + memoryContext;
+      }
+    }
+
     // Execute research via agent manager
     const result = await agentManager.getOrchestrator().executeTask('research_agent', researchTask);
+
+    // Store research findings in memory if userId is provided
+    console.log('🔍 Debug: Checking memory storage conditions...');
+    console.log('🔍 Debug: userId:', userId);
+    console.log('🔍 Debug: memoryService.isInitialized():', memoryService.isInitialized());
+    console.log('🔍 Debug: result.data exists:', !!result.data);
+    console.log('🔍 Debug: result.data structure:', result.data ? Object.keys(result.data) : 'no data');
+    
+    if (userId && memoryService.isInitialized() && result.data) {
+      console.log('🔍 Debug: All conditions met, attempting to store research findings...');
+      
+      const memoryCtx = {
+        userId,
+        sessionId: sessionId || `research_${Date.now()}`,
+        domain: context?.industry || 'general',
+        researchType: type || 'general'
+      };
+
+      try {
+        const memoryIds = await memoryService.storeResearchFindings(
+          {
+            query,
+            summary: result.data.summary || '',
+            keyFindings: result.data.keyFindings || [],
+            insights: result.data.insights || [],
+            competitors: result.data.competitors || []
+          },
+          memoryCtx
+        );
+        
+        console.log('✅ Debug: Research findings stored in memory with IDs:', memoryIds);
+        
+        // Add memory information to the response
+        (result as any).memoryIds = memoryIds;
+        (result as any).memoryEnhanced = true;
+      } catch (memoryError) {
+        console.error('❌ Debug: Error storing research findings in memory:', memoryError);
+        // Don't fail the request if memory storage fails
+        (result as any).memoryError = 'Failed to store in memory';
+      }
+    } else {
+      console.log('🔍 Debug: Memory storage skipped. Reasons:', {
+        noUserId: !userId,
+        memoryNotInitialized: !memoryService.isInitialized(),
+        noResultData: !result.data
+      });
+    }
 
     return NextResponse.json({
       success: true,
@@ -73,7 +142,8 @@ export async function POST(request: NextRequest) {
         timestamp: new Date().toISOString(),
         agentUsed: 'research_agent',
         taskType: type,
-        query: query.trim()
+        query: query.trim(),
+        memoryEnhanced: !!memoryContext
       }
     });
 

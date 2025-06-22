@@ -251,7 +251,11 @@ export default function ResearchPanel({ userId }: ResearchPanelProps) {
       const response = await fetch('/api/agents/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(researchTask),
+        body: JSON.stringify({
+          ...researchTask,
+          userId,  // 🔧 FIX: Include userId for memory storage
+          sessionId: `research_${Date.now()}`, // Add sessionId too
+        }),
       });
 
       const data = await response.json();
@@ -805,7 +809,7 @@ export default function ResearchPanel({ userId }: ResearchPanelProps) {
                           {job.domain}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {new Date(job.$createdAt).toLocaleString()}
+                          {new Date(job.createdAt).toLocaleString()}
                         </div>
                       </div>
                     </div>
