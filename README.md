@@ -56,26 +56,6 @@ AgentHub features a sophisticated orchestrated agent system:
 - **Research history** and pattern recognition
 - **Personalized recommendations** based on past behavior
 
-## 🏆 Hackathon Prize Categories
-
-### 🥇 **Best Crawler Agent (Tavily Prize)**
-- Advanced Tavily integration with smart content extraction
-- Anti-detection crawling technology
-- Real-time competitive monitoring
-- Multi-source data aggregation
-
-### 🥈 **Best AI Copilot (CopilotKit Prize)**  
-- Seamless CopilotKit integration in existing workflows
-- Custom AI actions for competitive intelligence
-- Context-aware AI assistance
-- Smart text completion and suggestions
-
-### 🥉 **Best Open Source Submission (Appwrite Prize)**
-- Built with Appwrite for authentication and data management
-- Open source architecture with comprehensive documentation
-- Production-ready deployment configuration
-- Community-friendly codebase structure
-
 ## ✨ Key Features
 
 ### 🎯 **Autonomous Intelligence**
@@ -285,62 +265,3 @@ const research = await agentManager.performResearch(query, {
 2. **Context Sharing** - Real-time data integration
 3. **User Experience** - Seamless AI assistance
 4. **Error Handling** - Robust production deployment
-
-## 🌟 Hackathon Highlights
-
-### **Innovation**
-- **Multi-agent orchestration** with real-time coordination
-- **Memory-powered AI** that learns and adapts
-- **Advanced crawling** with anti-detection technology
-- **Competitive intelligence specialization** for business insights
-
-### **Technical Excellence**
-- **Production-ready architecture** with error handling
-- **Scalable design** supporting enterprise workloads
-- **Security best practices** for API key management
-- **Comprehensive testing** and documentation
-
-### **Business Viability**
-- **Clear market opportunity** in competitive intelligence
-- **Proven demand** from existing manual processes
-- **Scalable business model** with SaaS pricing
-- **Enterprise-ready features** for team collaboration
-
-## 🤝 Contributing
-
-We welcome contributions to AgentHub! Please see our contributing guidelines:
-
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-4. **Push to branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🏆 Hackathon Submission
-
-**AgentHub** represents the future of competitive intelligence through autonomous AI agents. Built for the 100 Agents Hackathon, this project demonstrates:
-
-- **Advanced multi-agent systems** working in harmony
-- **Real-world business applications** with measurable impact
-- **Cutting-edge AI technologies** integrated seamlessly
-- **Production-ready architecture** for immediate deployment
-
-### **Contact & Demo**
-- **Live Demo**: [Deploy link coming soon]
-- **Video Presentation**: [Video link coming soon]
-- **GitHub Repository**: [This repository]
-- **Team Contact**: [Your contact information]
-
----
-
-<div align="center">
-  
-**Built with ❤️ for the 100 Agents Hackathon**
-
-*Pushing the boundaries of what's possible with agentic AI*
-
-</div> 
