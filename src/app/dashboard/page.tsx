@@ -665,9 +665,26 @@ This will help you build a comprehensive competitive landscape!`;
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
                 <img 
-                  src="/spyce-logo.svg" 
+                  src="/spyce-logo-simple.svg" 
                   alt="Spyce Intelligence" 
                   className="h-8 w-auto"
+                  onError={(e) => {
+                    console.error('Simple logo failed to load on dashboard, trying original:', e);
+                    const target = e.target as HTMLImageElement;
+                    // Try the original logo
+                    target.src = '/spyce-logo.svg';
+                    target.onerror = () => {
+                      console.error('Original logo also failed on dashboard, showing text fallback');
+                      target.style.display = 'none';
+                      const fallbackDiv = document.createElement('div');
+                      fallbackDiv.className = 'text-lg font-bold text-blue-600';
+                      fallbackDiv.textContent = 'SPYCE';
+                      target.parentNode?.appendChild(fallbackDiv);
+                    };
+                  }}
+                  onLoad={() => {
+                    console.log('Logo loaded successfully on dashboard');
+                  }}
                 />
               </div>
             </div>

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { authService } from '@/lib/auth';
 
 export default function LoginPage() {
@@ -54,17 +53,26 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center mb-6">
-            <Image 
-              src="/spyce-logo.svg" 
+            <img 
+              src="/spyce-logo-simple.svg" 
               alt="Spyce Intelligence" 
-              width={120}
-              height={48}
               className="h-12 w-auto"
-              priority
               onError={(e) => {
-                console.error('Logo failed to load:', e);
-                // Fallback to text if logo fails
-                (e.target as HTMLImageElement).style.display = 'none';
+                console.error('Simple logo failed to load, trying original:', e);
+                const target = e.target as HTMLImageElement;
+                // Try the original logo
+                target.src = '/spyce-logo.svg';
+                target.onerror = () => {
+                  console.error('Original logo also failed, showing text fallback');
+                  target.style.display = 'none';
+                  const fallbackDiv = document.createElement('div');
+                  fallbackDiv.className = 'text-2xl font-bold text-blue-600';
+                  fallbackDiv.textContent = 'SPYCE';
+                  target.parentNode?.appendChild(fallbackDiv);
+                };
+              }}
+              onLoad={() => {
+                console.log('Logo loaded successfully');
               }}
             />
           </div>

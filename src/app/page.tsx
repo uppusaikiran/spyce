@@ -45,16 +45,33 @@ export default function HomePage() {
           >
             <div className="text-center">
               {/* Logo */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 className="flex justify-center mb-8"
               >
                 <img 
-                  src="/spyce-logo.svg" 
+                  src="/spyce-logo-simple.svg" 
                   alt="Spyce Intelligence" 
                   className="h-16 w-auto"
+                  onError={(e) => {
+                    console.error('Simple logo failed to load on homepage, trying original:', e);
+                    const target = e.target as HTMLImageElement;
+                    // Try the original logo
+                    target.src = '/spyce-logo.svg';
+                    target.onerror = () => {
+                      console.error('Original logo also failed on homepage, showing text fallback');
+                      target.style.display = 'none';
+                      const fallbackDiv = document.createElement('div');
+                      fallbackDiv.className = 'text-4xl font-bold text-blue-600';
+                      fallbackDiv.textContent = 'SPYCE';
+                      target.parentNode?.appendChild(fallbackDiv);
+                    };
+                  }}
+                  onLoad={() => {
+                    console.log('Logo loaded successfully on homepage');
+                  }}
                 />
               </motion.div>
               
