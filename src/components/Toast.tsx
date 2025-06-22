@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -29,48 +31,56 @@ function ToastItem({ toast, onClose }: ToastProps) {
   const getToastStyles = (type: ToastType) => {
     switch (type) {
       case 'success':
-        return 'bg-green-50 border-green-200 text-green-800';
+        return 'bg-green-50/90 backdrop-blur-sm border-green-200/50 text-green-800';
       case 'error':
-        return 'bg-red-50 border-red-200 text-red-800';
+        return 'bg-red-50/90 backdrop-blur-sm border-red-200/50 text-red-800';
       case 'warning':
-        return 'bg-yellow-50 border-yellow-200 text-yellow-800';
+        return 'bg-yellow-50/90 backdrop-blur-sm border-yellow-200/50 text-yellow-800';
       case 'info':
-        return 'bg-blue-50 border-blue-200 text-blue-800';
+        return 'bg-blue-50/90 backdrop-blur-sm border-blue-200/50 text-blue-800';
       default:
-        return 'bg-gray-50 border-gray-200 text-gray-800';
+        return 'bg-gray-50/90 backdrop-blur-sm border-gray-200/50 text-gray-800';
     }
   };
 
   const getIcon = (type: ToastType) => {
     switch (type) {
       case 'success':
-        return '✅';
+        return <CheckCircle className="w-5 h-5" />;
       case 'error':
-        return '❌';
+        return <AlertCircle className="w-5 h-5" />;
       case 'warning':
-        return '⚠️';
+        return <AlertTriangle className="w-5 h-5" />;
       case 'info':
-        return 'ℹ️';
+        return <Info className="w-5 h-5" />;
       default:
-        return '📢';
+        return <Info className="w-5 h-5" />;
     }
   };
 
   return (
-    <div className={`flex items-center p-4 border rounded-lg shadow-lg transform transition-all duration-300 ${getToastStyles(toast.type)}`}>
-      <span className="text-xl mr-3">{getIcon(toast.type)}</span>
-      <div className="flex-1">
-        <p className="text-sm font-medium">{toast.message}</p>
+    <motion.div
+      initial={{ opacity: 0, x: 300, scale: 0.8 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 300, scale: 0.8 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={`flex items-center p-4 border rounded-xl shadow-xl ${getToastStyles(toast.type)}`}
+    >
+      <div className="flex-shrink-0 mr-3">
+        {getIcon(toast.type)}
       </div>
-      <button 
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium leading-relaxed">{toast.message}</p>
+      </div>
+      <motion.button 
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={() => onClose(toast.id)}
-        className="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+        className="ml-4 p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-full hover:bg-white/50"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
+        <X className="w-4 h-4" />
+      </motion.button>
+    </motion.div>
   );
 }
 

@@ -42,6 +42,12 @@ export async function GET() {
           lastActivity: new Date().toISOString()
         },
         {
+          id: 'research_agent',
+          name: 'Research Agent',
+          status: 'idle' as const,
+          lastActivity: new Date().toISOString()
+        },
+        {
           id: 'analysis_agent',
           name: 'Analysis Agent',
           status: 'idle' as const,
@@ -79,6 +85,12 @@ export async function GET() {
         {
           id: 'crawling_agent',
           name: 'Crawling Agent',
+          status: 'error' as const,
+          lastActivity: new Date().toISOString()
+        },
+        {
+          id: 'research_agent',
+          name: 'Research Agent',
           status: 'error' as const,
           lastActivity: new Date().toISOString()
         },

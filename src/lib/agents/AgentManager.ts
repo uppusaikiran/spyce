@@ -1,6 +1,7 @@
 import { agentOrchestrator } from './index';
 import { DiscoveryAgent } from './DiscoveryAgent';
 import { CrawlingAgent } from './CrawlingAgent';
+import { ResearchAgent } from './ResearchAgent';
 
 export class AgentManager {
   private static instance: AgentManager;
@@ -27,6 +28,7 @@ export class AgentManager {
       // Initialize and register agents
       const discoveryAgent = new DiscoveryAgent();
       const crawlingAgent = new CrawlingAgent();
+      const researchAgent = new ResearchAgent();
 
       // TODO: Add other agents as they're implemented
       // const analysisAgent = new AnalysisAgent();
@@ -36,6 +38,7 @@ export class AgentManager {
       // Register agents with orchestrator
       agentOrchestrator.registerAgent(discoveryAgent);
       agentOrchestrator.registerAgent(crawlingAgent);
+      agentOrchestrator.registerAgent(researchAgent);
 
       // Start all agents
       await agentOrchestrator.startAll();
@@ -117,6 +120,108 @@ export class AgentManager {
       type: 'monitor_changes',
       domains,
       frequency
+    });
+  }
+
+  async performResearch(query: string, options?: {
+    type?: 'deep_research' | 'competitive_analysis' | 'market_intelligence' | 'trend_analysis' | 'source_verification' | 'contextual_research';
+    context?: {
+      industry?: string;
+      competitors?: string[];
+      timeframe?: 'recent' | 'quarterly' | 'yearly' | 'all-time';
+      depth?: 'surface' | 'moderate' | 'comprehensive' | 'exhaustive';
+      sources?: 'academic' | 'news' | 'industry' | 'social' | 'all';
+    };
+    focusAreas?: string[];
+    excludeTerms?: string[];
+    customInstructions?: string;
+  }) {
+    if (!this.initialized) {
+      throw new Error('Agent system not initialized');
+    }
+
+    return agentOrchestrator.executeTask('research_agent', {
+      type: options?.type || 'deep_research',
+      query,
+      context: options?.context || {},
+      focusAreas: options?.focusAreas || [],
+      excludeTerms: options?.excludeTerms || [],
+      customInstructions: options?.customInstructions || ''
+    });
+  }
+
+  async analyzeCompetitors(competitors: string[], options?: {
+    industry?: string;
+    focusAreas?: string[];
+    depth?: 'surface' | 'moderate' | 'comprehensive' | 'exhaustive';
+  }) {
+    if (!this.initialized) {
+      throw new Error('Agent system not initialized');
+    }
+
+    return agentOrchestrator.executeTask('research_agent', {
+      type: 'competitive_analysis',
+      query: `Competitive analysis for ${competitors.join(', ')}`,
+      context: {
+        competitors,
+        industry: options?.industry,
+        depth: options?.depth || 'comprehensive'
+      },
+      focusAreas: options?.focusAreas || [
+        'business strategy',
+        'product offerings',
+        'market position',
+        'financial performance',
+        'recent developments'
+      ]
+    });
+  }
+
+  async getMarketIntelligence(query: string, options?: {
+    industry?: string;
+    regions?: string[];
+    timeframe?: 'recent' | 'quarterly' | 'yearly' | 'all-time';
+    focusAreas?: string[];
+  }) {
+    if (!this.initialized) {
+      throw new Error('Agent system not initialized');
+    }
+
+    return agentOrchestrator.executeTask('research_agent', {
+      type: 'market_intelligence',
+      query,
+      context: {
+        industry: options?.industry,
+        timeframe: options?.timeframe || 'recent'
+      },
+      regions: options?.regions || [],
+      focusAreas: options?.focusAreas || [
+        'market size',
+        'growth trends',
+        'key players',
+        'opportunities',
+        'threats'
+      ]
+    });
+  }
+
+  async analyzeTrends(query: string, options?: {
+    industry?: string;
+    timeframe?: 'recent' | 'quarterly' | 'yearly' | 'all-time';
+    depth?: 'surface' | 'moderate' | 'comprehensive' | 'exhaustive';
+  }) {
+    if (!this.initialized) {
+      throw new Error('Agent system not initialized');
+    }
+
+    return agentOrchestrator.executeTask('research_agent', {
+      type: 'trend_analysis',
+      query,
+      context: {
+        industry: options?.industry,
+        timeframe: options?.timeframe || 'recent',
+        depth: options?.depth || 'comprehensive'
+      }
     });
   }
 

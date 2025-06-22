@@ -25,7 +25,7 @@ export interface CompetitorDomain {
 export interface Job {
   $id: string;
   userId: string;
-  type: 'discovery' | 'crawl';
+  type: 'discovery' | 'crawl' | 'research';
   status: 'pending' | 'running' | 'completed' | 'failed';
   domain?: string;
   industry?: string;

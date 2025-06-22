@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { CompetitorDomain, Job, databaseService } from '@/lib/database';
 import { useToast, ToastContainer } from './Toast';
+import ResearchPanel from './ResearchPanel';
 
 interface AgentStatus {
   id: string;
@@ -25,6 +26,7 @@ export default function AgentDashboard({ userId }: AgentDashboardProps) {
   const [expandedJobs, setExpandedJobs] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
   const [addingDomain, setAddingDomain] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'operations' | 'research'>('operations');
   
   // Toast notifications
   const { toasts, removeToast, showSuccess, showError, showWarning } = useToast();
@@ -483,7 +485,7 @@ export default function AgentDashboard({ userId }: AgentDashboardProps) {
       {/* Monitoring Summary */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">📊 Monitoring Summary</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           <div className="bg-blue-50 p-4 rounded-lg">
             <div className="text-2xl font-bold text-blue-600">{domains.length}</div>
             <div className="text-sm text-blue-800">Total Domains</div>
@@ -504,10 +506,51 @@ export default function AgentDashboard({ userId }: AgentDashboardProps) {
             <div className="text-2xl font-bold text-orange-600">{jobs.length}</div>
             <div className="text-sm text-orange-800">Total Jobs</div>
           </div>
+          <div className="bg-cyan-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-cyan-600">
+              {jobs.filter(j => j.type === 'research').length}
+            </div>
+            <div className="text-sm text-cyan-800">Research Tasks</div>
+          </div>
+          <div className="bg-indigo-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-indigo-600">
+              {jobs.filter(j => j.type === 'research' && j.status === 'completed').length}
+            </div>
+            <div className="text-sm text-indigo-800">Research Complete</div>
+          </div>
         </div>
-      </div>
+             </div>
 
-      {/* Job Controls */}
+       {/* Tab Navigation */}
+       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+         <div className="flex border-b border-gray-200">
+           <button
+             onClick={() => setActiveTab('operations')}
+             className={`flex-1 py-3 px-6 text-center font-medium transition-colors ${
+               activeTab === 'operations'
+                 ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
+                 : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+             }`}
+           >
+             🔧 Intelligence Operations
+           </button>
+           <button
+             onClick={() => setActiveTab('research')}
+             className={`flex-1 py-3 px-6 text-center font-medium transition-colors ${
+               activeTab === 'research'
+                 ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600'
+                 : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+             }`}
+           >
+             🧠 Advanced Research
+           </button>
+         </div>
+       </div>
+
+       {/* Tab Content */}
+       {activeTab === 'operations' ? (
+         <div>
+       {/* Job Controls */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Discovery */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -630,10 +673,16 @@ export default function AgentDashboard({ userId }: AgentDashboardProps) {
                 </div>
               );
             })}
-          </div>
-        )}
-      </div>
-    </div>
-    </>
-  );
+                     </div>
+         )}
+       </div>
+         </div>
+       ) : (
+         <div>
+           <ResearchPanel userId="demo-user" />
+         </div>
+       )}
+     </div>
+     </>
+   );
 } 
