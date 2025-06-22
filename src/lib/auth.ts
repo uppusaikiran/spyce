@@ -28,21 +28,31 @@ export class AuthService {
   // Login user
   async login(email: string, password: string): Promise<User> {
     try {
+      console.log('🔍 Login attempt started for:', email);
+      console.log('🔍 Environment check:', {
+        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT,
+        projectId: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID ? 'SET' : 'NOT SET',
+        origin: typeof window !== 'undefined' ? window.location.origin : 'server-side'
+      });
+
       // First check if there's already an active session
       try {
+        console.log('🔍 Checking for existing session...');
         const currentUser = await this.getCurrentUser();
         if (currentUser) {
+          console.log('✅ User already logged in:', currentUser.email);
           // User is already logged in, return current user
           return currentUser;
         }
       } catch (error) {
         // No active session, continue with login
-        console.log('No active session found, proceeding with login');
+        console.log('🔍 No active session found, proceeding with login');
       }
 
       // If we get here, either there's no session or getCurrentUser failed
       // Clean up any existing sessions before creating a new one
       try {
+        console.log('🔍 Cleaning up existing sessions...');
         await account.deleteSessions();
       } catch (error) {
         // It's okay if there are no sessions to delete
@@ -50,14 +60,27 @@ export class AuthService {
       }
 
       // Now create the new session
+      console.log('🔍 Creating new email session...');
       await account.createEmailSession(email, password);
+      
+      console.log('🔍 Getting user info after session creation...');
       const user = await this.getCurrentUser();
       if (!user) {
         throw new Error('Failed to get user after login');
       }
+      
+      console.log('✅ Login successful for:', user.email);
       return user;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('❌ Login error details:', {
+        error,
+        message: error instanceof Error ? error.message : 'Unknown error',
+        name: error instanceof Error ? error.name : 'Unknown',
+        code: (error as any)?.code,
+        type: (error as any)?.type,
+        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT,
+        timestamp: new Date().toISOString()
+      });
       throw error;
     }
   }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { authService } from '@/lib/auth';
 
 export default function LoginPage() {
@@ -53,10 +54,18 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center mb-6">
-            <img 
+            <Image 
               src="/spyce-logo.svg" 
               alt="Spyce Intelligence" 
+              width={120}
+              height={48}
               className="h-12 w-auto"
+              priority
+              onError={(e) => {
+                console.error('Logo failed to load:', e);
+                // Fallback to text if logo fails
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
             />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
