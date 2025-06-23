@@ -145,6 +145,9 @@ Thumbs.db
 # Local development
 .vercel
 
+# Vercel deployment artifacts
+.vercel/
+
 # PWA files
 **/public/workbox-*
 **/public/worker-*

@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc --noEmit",
-    "setup-db": "node scripts/setup-database.js"
+    "setup-db": "node scripts/setup-database.js",
+    "vercel-build": "next build",
+    "postbuild": "next-sitemap"
   },
   "keywords": [
     "competitive-intelligence",
