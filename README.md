@@ -1,4 +1,4 @@
-# AgentHub - Multi-Agent Competitive Intelligence Platform
+# Spyce - Multi-Agent Competitive Intelligence Platform
 
 <div align="center">
     
@@ -13,9 +13,9 @@
 
 ---
 
-## 🚀 About AgentHub
+## 🚀 About Spyce
 
-**AgentHub** is an advanced multi-agent competitive intelligence platform that demonstrates the cutting edge of agentic AI. Built specifically for the [100 Agents Hackathon](https://100agents.devpost.com/), this project showcases how multiple AI agents can work together autonomously to solve complex business intelligence challenges.
+**Spyce** is an advanced multi-agent competitive intelligence platform that demonstrates the cutting edge of agentic AI. Built specifically for the [100 Agents Hackathon](https://100agents.devpost.com/), this project showcases how multiple AI agents can work together autonomously to solve complex business intelligence challenges.
 
 Our platform combines **autonomous AI agents**, **advanced crawling technology**, **memory-powered learning**, and **intelligent research capabilities** to deliver real-time competitive insights that drive strategic business decisions.
 
