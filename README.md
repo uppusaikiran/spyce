@@ -180,12 +180,6 @@ await memoryService.storeResearchFindings(findings, {
 - **Sales Intelligence** - Competitive battlecards and positioning
 - **Investment Research** - Market due diligence and competitor assessment
 
-### **ROI Demonstration**
-- **Cost Reduction**: $50,000/year consultant → $500/month SaaS
-- **Time Savings**: Weeks of manual research → Real-time insights
-- **Competitive Advantage**: 2-week head start on market developments
-- **Scalability**: Monitor 100+ competitors vs. manual tracking of 5-10
-
 ## 🏗 System Architecture
 
 ```mermaid
