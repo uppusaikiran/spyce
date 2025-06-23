@@ -1,9 +1,7 @@
 # AgentHub - Multi-Agent Competitive Intelligence Platform
 
 <div align="center">
-  
-  🏆 **Submission for 100 Agents Hackathon** 🏆
-  
+    
   *Pushing the Limits of Agentic AI in Competitive Intelligence*
   
   [![CopilotKit](https://img.shields.io/badge/Powered%20by-CopilotKit-blue?style=for-the-badge)](https://copilotkit.ai)
