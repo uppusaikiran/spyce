@@ -98,10 +98,6 @@ AgentHub features a sophisticated orchestrated agent system:
 - **Node Appwrite** - Server-side integrations
 - **Custom Agent Orchestration** - Multi-agent coordination system
 
-### **Research & Analysis**
-- **Serper API** - Search and discovery enhancement
-- **Keywords AI** - LLM monitoring and optimization
-- **Custom sentiment analysis** - Market intelligence processing
 
 ## 🚀 Quick Start
 
